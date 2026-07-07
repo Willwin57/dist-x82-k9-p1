@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Logistic App | Вход</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 300px; }
+        input { width: 80%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .hidden { display: none; }
+        .btn-download { display: block; margin-top: 20px; padding: 15px; background: #28a745; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="login" class="card">
+    <h2>Вход в систему</h2>
+    <input type="password" id="pass" placeholder="Введите пароль">
+    <button onclick="check()">Войти</button>
+</div>
+
+<div id="download" class="card hidden">
+    <h2>Готово!</h2>
+    <a href="https://drive.google.com/file/d/1XzCgj6Xi4BuXuv5LGpzcB4pLfYU0sxRq/view?usp=drive_link" class="btn-download">Скачать Android (.apk)</a>
+</div>
+
+<script>
+    function check() {
+        if (document.getElementById("pass").value === "Logistic2026!") {
+            document.getElementById("login").classList.add('hidden');
+            document.getElementById("download").classList.remove('hidden');
+        } else {
+            alert("Неверный пароль!");
+        }
+    }
+</script>
+</body>
+</html>

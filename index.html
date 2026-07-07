@@ -1,40 +1,314 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Logistic App | Вход</title>
-    <style>
-        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 300px; }
-        input { width: 80%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
-        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .hidden { display: none; }
-        .btn-download { display: block; margin-top: 20px; padding: 15px; background: #28a745; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>PT-Driver — скачать приложение</title>
+  <meta name="description" content="Мобильное приложение PT-Driver для водителей" />
+  <meta name="theme-color" content="#A20000" />
+  <style>
+    :root {
+      --brand: #A20000;
+      --brand-dark: #7A0000;
+      --bg: #F5F5F5;
+      --text: #333;
+      --muted: #757575;
+      --card: #fff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      /* Диагональный градиент: светлый верхний-левый угол → тёмный нижний-правый */
+      background: linear-gradient(135deg, #FCFCFD 0%, #EDEEF1 45%, #D8DAE0 100%);
+      color: var(--text);
+    }
+    /* Редкий шахматный узор из логотипа-машинки */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: url('./assets/truck_tile.png'), url('./assets/truck_tile.png');
+      background-size: 240px 240px, 240px 240px;
+      background-position: 0 0, 120px 120px;
+      background-repeat: repeat, repeat;
+      opacity: 0.07;
+      pointer-events: none;
+    }
+
+    .header {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      background: radial-gradient(130% 150% at 50% -25%, #E02525 0%, #BF0000 42%, #7A0000 100%);
+      color: #fff;
+      padding: 54px 20px 84px;
+      border-radius: 0 0 36px 36px;
+      text-align: center;
+    }
+    .header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 16% 22%, rgba(255,255,255,0.14), transparent 45%),
+        radial-gradient(circle at 88% 12%, rgba(255,255,255,0.10), transparent 42%);
+      pointer-events: none;
+    }
+    .header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(120deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 24px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .header .badge {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.38);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    .header p {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: #fff;
+      font-size: clamp(18px, 4.4vw, 24px);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .wrap {
+      max-width: 920px;
+      margin: -44px auto 32px;
+      padding: 0 16px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      flex: 1 1 400px;
+      max-width: 440px;
+      background: var(--card);
+      border-radius: 24px;
+      padding: 34px 24px 26px;
+      box-shadow: 0 18px 44px rgba(122, 0, 0, 0.14);
+      text-align: center;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #E02525, #A20000, #7A0000);
+    }
+
+    .logo-wrap {
+      position: relative;
+      width: 118px;
+      height: 118px;
+      margin: 4px auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(162,0,0,0.20), transparent 68%);
+      border-radius: 50%;
+    }
+    .logo {
+      position: relative;
+      z-index: 1;
+      width: 94px; height: 94px;
+      border-radius: 22px;
+      object-fit: contain;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(162, 0, 0, 0.22);
+      display: block;
+    }
+
+    .card h2 { margin: 0 0 10px; font-size: 24px; font-weight: 800; }
+
+    .meta {
+      display: block;
+      width: fit-content;
+      color: var(--brand);
+      background: #FDECEC;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin: 0 auto 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 48px;
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #C81717 0%, #A20000 60%, #8A0000 100%);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.2s, filter 0.2s;
+      box-shadow: 0 10px 22px rgba(162, 0, 0, 0.28);
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(162, 0, 0, 0.34); filter: brightness(1.05); }
+    .btn:active { transform: translateY(0) scale(0.99); }
+
+    .features { margin: 22px 0 0; padding: 0; list-style: none; text-align: left; }
+    .features li {
+      position: relative; padding: 10px 0 10px 30px; font-size: 14px; color: #444;
+      border-top: 1px solid #F0F0F0;
+    }
+    .features li:first-child { border-top: none; }
+    .features li::before {
+      content: "";
+      position: absolute;
+      left: 2px; top: 12px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 4px rgba(162, 0, 0, 0.10);
+    }
+
+    .guide {
+      margin-top: 0;
+      text-align: left;
+    }
+    .guide h3 {
+      margin: 0 0 14px;
+      font-size: 15px;
+      font-weight: 800;
+      color: #444;
+    }
+    .guide ol { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+    .guide li {
+      position: relative;
+      padding: 0 0 16px 40px;
+      font-size: 13.5px;
+      color: #555;
+      line-height: 1.5;
+    }
+    .guide li:last-child { padding-bottom: 0; }
+    .guide li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0; top: 0;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .guide li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 12.5px; top: 28px; bottom: 6px;
+      width: 2px;
+      background: #F0DADA;
+    }
+    .guide b { color: var(--brand); }
+    .guide .note {
+      margin: 4px 0 0;
+      padding: 12px 14px;
+      background: #FDF3F3;
+      border-left: 3px solid var(--brand);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .footer { text-align: center; color: #BDBDBD; font-size: 12px; padding: 0 16px 28px; }
+  </style>
 </head>
 <body>
+  <header class="header">
+    <span class="badge">Ранний доступ · бета</span>
+    <p>Приложение для водителей компании «Приволжье-Транс»</p>
+  </header>
 
-<div id="login" class="card">
-    <h2>Вход в систему</h2>
-    <input type="password" id="pass" placeholder="Введите пароль">
-    <button onclick="check()">Войти</button>
-</div>
+  <main class="wrap">
+    <section class="card">
+      <div class="logo-wrap">
+        <img class="logo" src="./assets/icon.png" width="94" height="94" alt="PT-Driver" />
+      </div>
+      <h2 style="color:#555;">PT-Driver</h2>
+      <p class="meta" id="versionLine">Версия 1.0 · Android</p>
 
-<div id="download" class="card hidden">
-    <h2>Готово!</h2>
-    <a href="https://drive.google.com/file/d/1XzCgj6Xi4BuXuv5LGpzcB4pLfYU0sxRq/view?usp=drive_link" class="btn-download">Скачать Android (.apk)</a>
-</div>
+      <a class="btn" id="downloadBtn" href="#" target="_blank" rel="noopener">Скачать</a>
 
-<script>
-    function check() {
-        if (document.getElementById("pass").value === "902302!=") {
-            document.getElementById("login").classList.add('hidden');
-            document.getElementById("download").classList.remove('hidden');
-        } else {
-            alert("Неверный пароль!");
-        }
-    }
-</script>
+      <ul class="features">
+        <li>Задания и маршруты</li>
+        <li>Отчёты водителя</li>
+        <li>Заправки, штрафы, сообщения</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <div class="guide">
+        <h3>Как скачать и установить</h3>
+        <ol>
+          <li>Нажмите кнопку <b>«Скачать»</b> — откроется страница файла на Google Диске.</li>
+          <li>На Google Диске нажмите значок <b>«Скачать»</b> (стрелка вниз вверху справа). Если появится предупреждение, что файл не проверен на вирусы из-за размера — выберите <b>«Всё равно скачать»</b>.</li>
+          <li>Откройте загруженный файл <b>PT-Driver.apk</b> из папки «Загрузки» или из шторки уведомлений.</li>
+          <li>Если Android предупредит об установке из неизвестного источника — нажмите <b>«Настройки»</b> и разрешите установку для браузера, затем вернитесь и нажмите <b>«Установить»</b>.</li>
+          <li>После установки откройте приложение и войдите под своей учётной записью.</li>
+        </ol>
+        <p class="note"><b>Обновление:</b> если приложение уже установлено, оно обновится поверх с сохранением данных. Если обновление не начинается или появляется ошибка — удалите прежнюю версию и установите новую.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© PT-Driver</footer>
+
+  <script>
+    const APK_URL = "https://drive.google.com/file/d/1XzCgj6Xi4BuXuv5LGpzcB4pLfYU0sxRq/view?usp=drive_link";
+    document.getElementById('downloadBtn').href = APK_URL;
+
+    fetch('./version.json')
+      .then(r => r.ok ? r.json() : null)
+      .then(info => {
+        if (!info) return;
+        const parts = [`Версия ${info.version}`, info.platform];
+        if (info.sizeMb) parts.push(`${info.sizeMb} МБ`);
+        const vl = document.getElementById('versionLine');
+        if (vl) vl.textContent = parts.join(' · ');
+      })
+      .catch(() => {});
+  </script>
 </body>
 </html>
